@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <%= favicon_link_tag("http://localhost:3000/favicon.jpg?1") %>
+  <title>Wolf Point</title>
+  <%= stylesheet_link_tag "application", "data-turbolinks-track" => true%>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= csrf_meta_tags %>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script type="text/javascript">
+var hh=0;
+var inter;
+function ShowBox()
+{
+     document.getElementById("behindText").style.display='none';
+     if(hh==80){
+         clearInterval(inter);
+         return;
+     }
+     obj = document.getElementById("coverlogin");
+     obj.style.visibility = 'visible';
+     hh+=2;
+     obj.style.height = hh + 'px';
+     setTimeout('document.getElementById("closeMe").style.display=""',300);
+}
+  
+function HideBox()
+{
+     obj = document.getElementById("coverlogin"); 
+     if(hh==2){
+         obj.style.visibility = 'hidden';
+         obj.style.height = '0.1em';
+         clearInterval(inter);
+         return;
+     }
+ 
+     hh-=2;
+     obj.style.height = hh + 'px';
+     setTimeout('document.getElementById("closeMe").style.display="none"',300);
+     setTimeout('document.getElementById("behindText").style.display=""',600);
+}
+</script>
+</head>
+<body>
+<% flash.each do |name, msg| %>
+	<%= content_tag :div, msg, :id => "flash_#{name}" %>
+<% end %>
+<div id="top_bar">	
+  <% if current_user %>
+    Signed in as <strong><%= current_user.name %></strong>
+    <% if current_user.roles == "Admin" %>
+    <ul>
+    	<li><%= link_to "See your profile", "/users/#{current_user.id}", 'data-no-turbolink' => true %></li>
+    	<li><%= link_to "See all artist and users", "/users/", 'data-no-turbolink' => true %></li>
+    <% else if current_user.roles == "Artist" %>
+    <ul>
+    	<li><%= link_to "See your profile", "/users/#{current_user.id}", 'data-no-turbolink' => true %></li>
+    <% end %>
+    <% end %>
+    <% if current_user.roles == "Admin" || current_user.roles == "Artist" %>
+	    	<li><%= link_to "Inbox", inbox_path, 'data-no-turbolink' => true %></li>
+	    </ul>
+    <% end %>
+    <% if current_user.roles == "User" %>
+	    	<li><%= link_to "Inbox", inbox_path, 'data-no-turbolink' => true %></li>
+	    	<% if current_user.is_approved == false %>
+	    		<li>Request Pending</li>
+	    	<% else %>
+	    		<li><%= link_to "Request Artist Account", request_role_path(current_user.id), method: :request_role, 'data-no-turbolink' => true %></li>
+	    	<% end %>
+	    </ul>
+    <% end %>
+    <%= link_to "Sign Out", "/sessions/logout", 'data-no-turbolink' => true %><br />
+    <%= link_to 'Change Password', forgot_password_path %></td>
+  <% else %>
+    <div id="click_login">
+	    <a href="#" ONCLICK="inter=setInterval('ShowBox()',3);return false;">Sign In</a> or <%= link_to " Join In", join_in_path, 'data-no-turbolink' => true %>
+	</div>
+	
+	<div id="coverlogin">
+	    <div id="loginbox">
+	    	<form accept-charset="UTF-8" action="/sessions" method="post">
+				<table>
+					<tr>
+						<td><label for="sessions_email">Email: </label>
+						<input id="sessions_email" name="sessions[email]" type="text" />
+						</td>
+					</tr>
+					<tr>
+						<td><label for="sessions_password">Password: </label>
+						<input id="sessions_password" name="sessions[password]" type="password" />
+						</td>
+					</tr>
+					<tr>
+						<td>
+						<input class="btn btn-large btn-primary" name="commit" type="submit" value="Sign in" />
+						<%= link_to "Go to Sign In page", sign_in_path, 'data-no-turbolink' => true %>
+						</td>
+					</tr>
+				</table>
+			</form>
+	    </div>
+	</div>
+	
+	<div id="behindText">
+	</div>
+	
+  <% end %>
+</div>
+
+<div id="header">
+	<div id="title_header">
+		<img src="<%=@root_url%>/banner6.png">
+	</div>
+</div>
+
+<% if current_user == nil%>
+	<center>
+		<div id="nav">
+			<ul>
+				<li><h3><%= link_to "Home", home_path, 'data-no-turbolink' => true %></h3></li>
+				<li><h3><%= link_to "All Images of Wolves", all_images_path, 'data-no-turbolink' => true %></h3></li>
+				<li><h3><%= link_to "All Artist", all_managers_path, 'data-no-turbolink' => true %></h3></li>
+				<li><h3><%= link_to "Show All Wolves", show_all_path, 'data-no-turbolink' => true %></h3></li>
+			</ul>
+		</div>
+	</center>
+<% else if current_user.roles == "Artist" || current_user.roles == "Admin" %>
+	<center>
+		<div id="nav_roles">
+			<ul>
+				<li><h3><%= link_to "Home", home_path, 'data-no-turbolink' => true %></h3></li>
+				<li><h3><%= link_to "All Images of Wolves", all_images_path, 'data-no-turbolink' => true %></h3></li>
+				<li><h3><%= link_to "All Artist", all_managers_path, 'data-no-turbolink' => true %></h3></li>
+				<li><h3><%= link_to "Show All Wolves", show_all_path, 'data-no-turbolink' => true %></h3></li>
+				<li><h3><%= link_to "My Wolves", "/pois/show_users_pois", 'data-no-turbolink' => true %></h3></li>
+				<li><h3><%= link_to 'New Wolf', new_poi_path, 'data-no-turbolink' => true %></h3></li>
+			</ul>
+		</div>
+	</center>
+<% else %>
+	<center>
+		<div id="nav">
+			<ul>
+				<li><h3><%= link_to "Home", home_path, 'data-no-turbolink' => true %></h3></li>
+				<li><h3><%= link_to "All Images of Wolves", all_images_path, 'data-no-turbolink' => true %></h3></li>
+				<li><h3><%= link_to "All Artist", all_managers_path, 'data-no-turbolink' => true %></h3></li>
+				<li><h3><%= link_to "Show All Wolves", show_all_path, 'data-no-turbolink' => true %></h3></li>
+			</ul>
+		</div>
+	</center>
+<% end %>
+<% end %>
+
+<%= yield :scripts %>
+<%= yield %>
+
+<div id="footer">
+	<h4><a href="https://bitbucket.org/kvaughn2/point-of-interest-capstone-group-l" target="_blank">Bitbucket Project Home Page</a></h4>
+	<br />
+	<h4><a href="https://bitbucket.org/kvaughn2/point-of-interest-capstone-group-l/wiki/Home" target="_blank">Wiki Home Page</a></h4>
+	
+</div>
+
+</body>
+</html>

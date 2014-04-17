@@ -1,0 +1,57 @@
+<%= stylesheet_link_tag "#{params[:controller]}.mobile" %>
+	
+<center><div id="content_new_poi">
+	<%= form_for(:poi, :url => {:controller => 'pois', :action => 'update'}) do |f| %>
+		<center>
+			<div id="new_poi">
+				<h1>Editing poi</h1><br/>
+			<center>
+			<table class="new_poi_table" border="1">
+				<tr>
+					<td><%= f.label :title %></td>
+					<td><%= f.text_field :title %></td>
+				</tr>
+				<tr>
+					<td><%= f.label :address %></td>
+					<td><%= f.text_field :address %></td>
+				</tr>
+				<tr>
+					<td><%= f.label :sponsor %></td>
+					<td><%= f.text_field :sponsor %></td>
+				</tr>
+				<tr>
+					<td><%= f.label :description %></td>
+					<td><%= f.text_field :description %></td>
+				</tr>
+				<tr>
+					<td><%= f.label :latitude %></td>
+					<td><%= f.text_field :latitude %></td>
+				</tr>
+				<tr>
+					<td><%= f.label :longitude %></td>
+					<td><%= f.text_field :longitude %></td>
+				</tr>
+				<tr>
+					<td><%= f.hidden_field :user_id, :value => current_user.id %></td>
+					<% f.hidden_field :poi_id, :value => @poi.id %>
+					<td align="center"><%= f.submit %></td>
+				</tr>
+				</table>
+			<br />
+			<% if @poi.errors.any? %>
+				<center>
+					<div id="error_explanation">
+				  		<center><h2><%= pluralize(@poi.errors.count, "error") %> prohibited this post from being saved:</h2></center>
+					    <ul>
+					    	<% @poi.errors.full_messages.each do |msg| %>
+					      		<li><%= msg %></li>
+					    	<% end %>
+					    </ul>
+				  	</div>
+			  	</center>
+			<% end %>
+			</center>
+			</div>
+		</center>
+	<% end %>
+</div></center>

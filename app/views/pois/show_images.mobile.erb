@@ -1,0 +1,65 @@
+<%= stylesheet_link_tag "#{params[:controller]}.mobile" %>
+	
+<center>
+	<div id="images_content">
+		<div id="current_images">
+			<center><h1>All current images</h1></center>
+			<%= form_for(@poi, :url => {:controller => 'pois', :action => 'new_title_image'}) do |f| %>
+				<table border="1">
+					<tr>
+						<td align="center"><strong>Image Name</strong></td>
+						<td align="center"><strong>Image</strong></td>
+						<td align="center"><strong>Title Image</strong></td>
+						<td></td>
+					</tr>
+					<% Dir.entries("public/images/#{@poi.id}_images/title_image")[2..-1].each do |file_name| %>
+						<% if file_name.byteslice(0,5).to_s.match(/_poi_/) %>
+							<tr>
+								<td><%= file_name %></td>
+								<td align="center"><%= image_tag("#{@root_url}/images/#{@poi.id}_images/title_image/" + file_name) %></td>
+								<td align="center"><%= radio_button_tag(:title_image, "#{file_name}", :checked) %></td>
+								<td align="center"><%= link_to 'Delete', delete_image_path(:file_name => file_name, :poi_id => @poi.id) %>
+									<%= f.hidden_field :current_title_image, :value => file_name %>
+								</td>
+							</tr>
+						<% end %>
+					<% end %>
+					<% Dir.entries("public/images/#{@poi.id}_images")[2..-1].each do |file_name| %>
+						<% if file_name.byteslice(0,5).to_s.match(/_poi_/) || file_name.to_s[0...-4] == @poi.id.to_s %>
+							<tr>
+								<td><%= file_name %></td>
+								<td align="center"><%= image_tag("#{@root_url}/images/#{@poi.id}_images/" + file_name) %></td>
+								<td align="center"><%= radio_button_tag(:title_image, "#{file_name}") %></td>
+								<td align="center"><%= link_to 'Delete', delete_image_path(:file_name => file_name, :poi_id => @poi.id) %></td>
+							</tr>
+						<% end %>
+					<% end %>
+					<tr>
+						<td></td>
+						<td></td>
+						<td align="center"><%= f.submit 'Title Image Update' %></td>
+						<td></td>
+					</tr>
+				</table>
+			<% end %>
+		</div>
+		<div id="new_images">
+			<%= form_for(@poi) do |f| %>
+				<h1>New Image</h1>
+				<center>
+					<table border="1">
+						<tr>
+							<td><%= f.label :image %></td>
+							<td><%= f.file_field :file %></td>
+						</tr>
+						<tr>
+							<td><%= f.hidden_field :poi_id, :value => @poi.id %></td>
+							<td align="center"><%= f.submit "Upload Image" %></td>
+						</tr>
+					</table>
+				</center>
+			<% end %>
+		</div>
+		<br />
+	</div>
+</center>

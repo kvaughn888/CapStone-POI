@@ -1,0 +1,74 @@
+//////////                            //////////
+//////////                            //////////
+//////////        Sign In Page        //////////
+//////////                            //////////
+//////////                            //////////
+
+body {
+  background-color: #527578;
+}
+
+#sign_in_body {
+  border: 2px solid black;
+  padding: 10px;
+  overflow: auto;
+  background-color: #47423F;
+  width: 95%;
+  margin: 20px auto;
+  overflow: auto;
+}
+
+#sign_table {
+  border: 2px solid black;
+  width: 40%;
+  background-color: #84978F;
+  padding: 10px;
+  margin: 20px;
+  float: left;
+  box-shadow: 10px 10px 5px #ADA692;
+}
+
+#integration_sign_in {
+  border: 2px solid black;
+  width: 40%;
+  background-color: #84978F;
+  padding: 10px;
+  margin: 20px;
+  float: right;
+  box-shadow: 10px 10px 5px #ADA692;
+}
+
+#integration_sign_in img{
+  width: auto;
+  height: 70px;
+}
+
+//////////                                   //////////
+//////////                                   //////////
+//////////        Password Reset Page        //////////
+//////////                                   //////////
+//////////                                   //////////
+
+#reset_body {
+  border: 2px solid black;
+  padding: 10px;
+  overflow: auto;
+  background-color: #47423F;
+  width: 95%;
+  margin: 20px auto;
+  overflow: auto;
+}
+
+#reset_table {
+  border: 2px solid black;
+  width: 60%;
+  background-color: #84978F;
+  padding: 10px;
+  margin: 20px;
+  float: center;
+  box-shadow: 10px 10px 5px #ADA692;
+}
+
+#reset_table table {
+  float: center;
+}

@@ -1,0 +1,57 @@
+<%= stylesheet_link_tag params[:controller] %>
+
+<div id="sign_in_body">
+	<div id="sign_table">
+		<center>
+			<h2>Sign in:</h2>
+		</center>
+		<center>
+			<form accept-charset="UTF-8" action="/sessions" method="post">
+				<table>
+					<tr>
+						<td><h2><label for="sessions_email">Email: </label></h2></td>
+						<td>
+						<input id="sessions_email" name="sessions[email]" type="text" />
+						</td>
+					</tr>
+					<tr>
+						<td><h2><label for="sessions_password">Password: </label></h2></td>
+						<td>
+						<input id="sessions_password" name="sessions[password]" type="password" />
+						</td>
+					</tr>
+					<tr>
+						<td><%= link_to 'Forgot your password?', forgot_password_path %></td>
+					</tr>
+					<tr>
+						<td>
+						<input type="checkbox" name="sessions[remember_me]" value="1" >
+						Remember me</td>
+					</tr>
+					<tr>
+						<td><%= submit_tag "Clear", :class => 'inputsubmit', :type => 'reset'%></td>
+						<td align="right">
+						<input class="btn btn-large btn-primary" name="commit" type="submit" value="Sign in" />
+						</td>
+					</tr>
+				</table>
+			</form>
+		</center>
+	</div>
+	<div id="integration_sign_in">
+		<center>
+			<h2>Sign in with:</h2>
+		</center>
+		<center>
+			<a href="http://localhost:3000/auth/facebook"><img src="http://localhost:3000/logos/facebook_sign_in.png" /></a>
+		</center>
+		<br />
+		<center>
+			<a href="http://localhost:3000/auth/gplus"><img src="http://localhost:3000/logos/google_sign_in.png" /></a>
+		</center>
+		<br />
+		<center><a href="http://localhost:3000/auth/twitter"><img src="http://localhost:3000/logos/twitter_sign_in.png" />
+		</center></a>
+	</div>
+	<br />
+</div>

@@ -1,0 +1,49 @@
+<%= stylesheet_link_tag params[:controller] %>
+	
+<center><div id="content_new_poi">
+	<%= form_for(:poi, :url => {:controller => 'pois', :action => 'update'}) do |f| %>
+		<center>
+			<div id="new_poi">
+				<h1>Editing Wolf</h1><br/>
+			<center>
+				<table border="1">
+				<tr>
+					<td align="center"><%= f.label :title %></td>
+					<td align="center"><%= f.text_field :title %></td>
+				</tr>
+				<tr>
+					<td align="center"><%= f.label :address %></td>
+					<td align="center"><%= f.text_field :address %></td>
+				</tr>
+				<tr>
+					<td align="center"><%= f.label :sponsor %></td>
+					<td align="center"><%= f.text_field :sponsor %></td>
+				</tr>
+				<tr>
+					<td align="center"><%= f.label :description %></td>
+					<td align="center"><%= f.text_area :description, :rows => 8, :cols => 30 %></td>
+				</tr>
+				<tr>
+					<td><%= f.hidden_field :user_id, :value => current_user.id %></td>
+					<% f.hidden_field :poi_id, :value => @poi.id %>
+					<td align="center"><%= f.submit %></td>
+				</tr>
+				</table>
+			<br />
+			<% if @poi.errors.any? %>
+				<center>
+					<div id="error_explanation">
+				  		<center><h2><%= pluralize(@poi.errors.count, "error") %> prohibited this post from being saved:</h2></center>
+					    <ul>
+					    	<% @poi.errors.full_messages.each do |msg| %>
+					      		<li><%= msg %></li>
+					    	<% end %>
+					    </ul>
+				  	</div>
+			  	</center>
+			<% end %>
+			</center>
+			</div>
+		</center>
+	<% end %>
+</div></center>

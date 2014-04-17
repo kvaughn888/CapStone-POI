@@ -1,0 +1,61 @@
+<%= stylesheet_link_tag params[:controller] %>
+
+<center>
+	<div id="join_in_body">
+		<%= form_for(:user, :url => {:controller => 'users', :action => 'create'}) do |f| %>
+		<center>
+			<div id="join_table">
+				<center>
+					<table>
+						<tr>
+							<td><h2><label>First and last name:</label></h2></td>
+							<td><%= f.text_field :name %></td>
+						</tr>
+						<tr>
+							<td><h2><label>Email:</label></h2></td>
+							<td><%= f.text_field :email %></td>
+						</tr>
+						<tr>
+							<td><h2><label>Password:</label></h2></td>
+							<td><%= f.password_field :password %></td>
+						</tr>
+						<tr>
+							<td><h2><label>Retype Password:</label></h2></td>
+							<td><%= f.password_field :password_confirmation  %></td>
+						</tr>
+						<tr>
+							<td><h2><label>Role Wanted:</label></h2></td>
+							<td>
+							<input type="radio" id="roles" name="user[roles]" value="Artist">
+							Artist</input>
+							<input type="radio" id="roles" name="user[roles]" value="User" checked="checked">
+							User</input> </td>
+						</tr>
+						<tr>
+							<td><%= f.hidden_field :is_approved, :value => true %></td>
+							<td><%= f.submit :Signup %></td>
+						</tr>
+					</table>
+				</center>
+				<br />
+				<% if @user.errors.any? %>
+				<center>
+					<div id="error_explanation">
+						<center>
+							<h2><%= pluralize(@user.errors.count, "error") %> prohibited this post from being saved:</h2>
+						</center>
+						<ul>
+							<% @user.errors.full_messages.each do |msg| %>
+							<li>
+								<%= msg %>
+							</li>
+							<% end %>
+						</ul>
+					</div>
+				</center>
+				<% end %>
+			</div>
+		</center>
+		<% end %>
+	</div>
+</center>

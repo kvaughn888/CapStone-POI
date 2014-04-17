@@ -1,0 +1,216 @@
+<script src="//maps.google.com/maps/api/js?v=3.13&sensor=false&libraries=geometry" type="text/javascript"></script>
+<script src="//google-maps-utility-library-v3.googlecode.com/svn/tags/markerclustererplus/2.0.14/src/markerclusterer_packed.js" type="text/javascript"></script>
+
+<script src="http://malsup.github.com/jquery.cycle2.js"></script>
+<script src="http://malsup.github.com/jquery.cycle2.carousel.js"></script>
+
+<script src="//code.jquery.com/jquery-1.9.1.js"></script>
+<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+<script>
+  $(function() {
+    $( "#tabs" ).tabs();
+  });
+</script>
+
+<%= stylesheet_link_tag params[:controller] %>
+
+<div id="content_show">
+	<div id="content_left">
+		<center>
+			<h1>This is titled <%= @poi.title %></h1>
+		</center>
+		<div id="about_show">
+			
+			<% Dir.entries("public/images/#{@poi.id}_images/title_image")[2..-1].each do |file_name| %>
+				<% if file_name.byteslice(0,5).to_s.match(/_poi_/) %>
+					<%= image_tag("#{@root_url}/images/#{@poi.id}_images/title_image/" + file_name) %>
+				<% end %>
+			<% end %>
+			
+			<h2>Artist:
+				<% @users.each do |user| %>
+					<% if user.id.to_s == @poi.user_id.to_s %>
+						<%= user.name %>
+					<% end %>
+				<% end %></h2>
+			<h2>Title:
+				<%= @poi.title %></h2>
+			<h2>Address:
+				<%= @poi.address %></h2>
+			<h2>Sponsored by:
+				<%= @poi.sponsor %></h2>
+			<h2>Description: 
+				<%= @poi.description %></h2>
+			<br />
+			<%= link_to "Directions", "https://www.google.com/maps/dir/current%20%20location/#{@poi.latitude},+#{@poi.longitude}/@#{@poi.latitude},#{@poi.longitude},13z", :target => "_blank" %>
+		</div>
+		<br />
+		<br />
+		<div id="tabs">
+			<ul>
+			    <li><a href="#tabs-1" data-turbolink>Artist Uploaded Images</a></li>
+			    <li><a href="#tabs-2" data-turbolink>User Uploaded Images</a></li>
+		  	</ul>
+		  	
+		  	<div id="tabs-1">
+				<div id="scroll_images">
+			    	<center>
+						<h3>Artist Images</h3>
+					</center>
+					<br>
+					<div class="cycle-slideshow cycle-autoinit"
+					data-cycle-fx="scrollHorz"
+					data-cycle-speed="3000"
+					data-cycle-timeout="1"
+					data-cycle-easing="linear"
+					>
+						<% Dir.entries("public/images/#{@poi.id}_images")[2..-1].each do |file_name| %>
+							<% if file_name.byteslice(0,5).to_s.match(/_poi_/) %>
+								<%= image_tag("#{@root_url}/images/#{@poi.id}_images/" + file_name) %>
+							<% end %>
+						<% end %>
+					</div>
+				</div>
+		  	</div>
+		  	
+			<div id="tabs-2">
+				<div id="scroll_images_user_uploaded">
+				<center>
+					<h3>User Uploaded Images</h3>
+				</center>
+					<br>
+					<div class="cycle-slideshow cycle-autoinit"
+					data-cycle-fx="scrollHorz"
+					data-cycle-speed="3000"
+					data-cycle-timeout="1"
+					data-cycle-easing="linear"
+					>
+						<% Dir.entries("public/images/#{@poi.id}_images/user_images/approved")[2..-1].each do |file_name| %>
+							<%= image_tag("#{@root_url}/images/#{@poi.id}_images/user_images/approved/" + file_name) %>
+						<% end %>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+	<div id="content_right">
+		<center>
+			<h2>All Comments</h2>
+		</center>
+		<div id="content_right_top">
+			<% @poi.comments.each do |comment| %>
+			<p>
+				<% if comment.text != nil %>
+					<% @users.each do |user| %>
+						<% if user.id.to_s == comment.user_id.to_s %>
+							<strong><%= user.name %>:</strong>
+							<%= comment.text %>
+						<% end %>
+					<% end %>
+
+					<% Dir.entries("public/images/#{@poi.id}_images/user_images/approved")[2..-1].each do |file_name| %>
+						<% if file_name.to_s[0...-4] == comment.id.to_s %>
+							<br>
+							<br>
+								<%= image_tag("#{@root_url}/images/#{@poi.id}_images/user_images/approved/" + file_name) %>
+						<% end %>
+					<% end %>
+
+					<% Dir.entries("public/images/#{@poi.id}_images/user_images/disapproved")[2..-1].each do |file_name| %>
+						<% if file_name.to_s[0...-4] == comment.id.to_s %>
+							<br>
+							<h4>Admin has not approved this image yet</h4>		
+						<% end %>
+					<% end %>
+				<hr>
+				<% end %>
+			</p>
+			<% end %>
+		</div>
+		<div id="content_right_bottom">
+			<% if current_user %>
+			<center>
+				<h3>Make your own comment</h3>
+			</center>
+			<center>
+				<%= form_for :comment, :url=> {:controller => 'comments', :action => 'create'} do |f| %>
+					<table>
+						<tr>
+							<td><%= f.text_area :text, :rows => 8, :cols => 45 %></td>
+						</tr>
+						<tr>
+							<td><%= f.file_field :file %></td>
+						</tr>
+						<tr>
+							<%= f.hidden_field :user_id, :value => current_user.id %>
+							<%= f.hidden_field :poi_id, :value => @poi.id %>
+							<td><%= f.submit %></td>
+						</tr>
+					</table>
+				<% end %>
+				<%= social_share_button_tag(@poi.title, :url => "#{@root_url}/pois/#{@poi.id}") %>
+			</center>
+			<% else %>
+			<center>
+				<h3>If you sign in, you can comment on this poi.</h3>
+				<h3>However, feel free to upload your on photo with the wolf without creating you an account!</h3>
+			</center>
+			<center>
+				<%= link_to "Sign In", sign_in_path %> or <%= link_to " Join In", join_in_path %>
+			</center>
+			<br />
+			<center>
+				<%= form_for :comment, :url=> {:controller => 'comments', :action => 'user_upload_image'} do |f| %>
+					<table border="1">
+						<tr>
+							<td><%= f.file_field :file %></td>
+						</tr>
+						<tr>
+							<%= f.hidden_field :poi_id, :value => @poi.id %>
+							<td align="center"><br /><%= f.submit 'Upload Image' %></td>
+						</tr>
+					</table>
+				<% end %>
+				<br />
+				<%= social_share_button_tag(@poi.title, :url => "#{@root_url}/pois/#{@poi.id}") %>
+			</center>
+			<% end %>
+		</div>
+		<div id="rating_content">
+			<center><h2>Rating for this wolf</h2></center>
+			<center>
+				<% if @poi.avg_rating.to_i == 1 %>
+					<%= image_tag("#{@root_url}/rating/1_star.png") %>
+					<h2><%= @poi.avg_rating %> stars!</h2>
+				<% elsif @poi.avg_rating.to_i == 2 %>
+					<%= image_tag("#{@root_url}/rating/2_star.png") %>
+					<h2><%= @poi.avg_rating %> stars!</h2>
+				<% elsif @poi.avg_rating.to_i == 3 %>
+					<%= image_tag("#{@root_url}/rating/3_star.png") %>
+					<h2><%= @poi.avg_rating %> stars!</h2>
+				<% elsif @poi.avg_rating.to_i == 4 %>
+					<%= image_tag("#{@root_url}/rating/4_star.png") %>
+					<h2><%= @poi.avg_rating %> stars!</h2>
+				<% elsif @poi.avg_rating.to_i == 5 %>
+					<%= image_tag("#{@root_url}/rating/5_star.png") %>
+					<h2><%= @poi.avg_rating %> stars!</h2>
+				<% else %>
+					<h2>This wolf does not have any ratings yet.</h2>
+				<% end %>
+			</center>
+			<br />
+			<center><h2>What do you think? Rate for yourself!</h2></center>
+			<center>
+				<div class="rating">
+					<%= link_to '☆', update_rating_path(@poi.id, "5"), method: :update_rating %>
+					<%= link_to '☆', update_rating_path(@poi.id, "4"), method: :update_rating %>
+					<%= link_to '☆', update_rating_path(@poi.id, "3"), method: :update_rating %>
+					<%= link_to '☆', update_rating_path(@poi.id, "2"), method: :update_rating %>
+					<%= link_to '☆', update_rating_path(@poi.id, "1"), method: :update_rating %>
+				</div>
+			</center>
+		</div>
+	</div>
+</div>

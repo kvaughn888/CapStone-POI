@@ -1,0 +1,45 @@
+<%= stylesheet_link_tag params[:controller] %>
+
+<div id="inbox_content">
+	<div id="inbox_folders">
+		<center><h2>Folders</h2></center>
+		<hr />
+		<center>
+			<table>
+				<tr>
+					<th><h3><%= link_to "Compose", new_message_path, 'data-no-turbolink' => true %></h3></th>
+				</tr>
+				<tr>
+					<th><h3><%= link_to "Inbox", inbox_path, 'data-no-turbolink' => true %></h3></th>
+				</tr>
+				<tr>
+					<th><h3><%= link_to "Sent", sent_path, 'data-no-turbolink' => true %></h3></th>
+				</tr>
+			</table>
+		</center>
+	</div>
+	<div id="show_message_content">
+		<center><h2>Message</h2></center>
+		<hr />
+		<center>
+			<table border="2">
+		    	<tr>
+					<% @users.each do |user| %>
+						<% if user.id.to_s == @message.sender.to_s%>
+							<th>From:</th>
+							<td><%= user.name %></td>
+						<% end %>
+					<% end %>
+				</tr>
+				<tr>
+					<th>Subject:</th>
+					<td><%= @message.subject %></td>
+				</tr>
+				<tr>
+					<th>Body:</th>
+					<td><h3><%= @message.body %></h3></td>
+				</tr>
+			</table>
+		</center>
+	</div>
+</div>

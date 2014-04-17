@@ -1,0 +1,65 @@
+<%= stylesheet_link_tag params[:controller] %>
+
+<% if current_user != nil%>
+	<% if current_user.roles == "Admin" %>
+	<div id="content_all_users">
+		<div id="all_users">
+			<center>
+				<h2>List of all the users and artists</h2>
+			</center>
+			<hr>
+			<center>
+				<table border="2">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Email</th>
+							<th>Role</th>
+							<th>Edit Role</th>
+							<th>Delete Account</th>
+							<th>Artist Request</th>
+						</tr>
+					</thead>
+						
+					<tbody>
+					<% @users.each do |user| %>
+						<tr>
+							<td><%= user.name %></td>
+							<td><a href="mailto:<%=user.email%>" target="_top"><%= user.email %></a></td>
+							
+							<td><%= user.roles %></td>
+							<td align="center"><li style="list-style-type: none;"><%= link_to "Edit", edit_user_role_path(user.id), 'data-no-turbolink' => true %></li></td>
+							<td align="center"><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+							
+							
+							<% if user.is_approved == false %>
+								<td align="center">
+									<%= link_to 'Approve', approve_path(user) %><br />
+									<%= link_to 'Disapprove', disapprove_path(user) %>
+								</td>
+							<% end %>
+							
+							<% if user.is_approved == true %>
+								<td></td>
+							<% end %>
+						</tr>
+					<% end %>
+					</tbody>
+				</table>
+			</center>
+		</div>
+	</div>
+	<% else %>
+	
+	<div id="content_all_users">
+		<center><h2>Sorry but you have to be an admin to view this page</h2></center>
+	</div>
+	
+	<% end %>
+<% else %>
+
+	<div id="content_all_users">
+		<center><h2>Sorry but you have to be an admin to view this page</h2></center>
+	</div>
+	
+<% end %>

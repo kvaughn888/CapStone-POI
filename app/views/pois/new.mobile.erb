@@ -1,0 +1,67 @@
+<%= stylesheet_link_tag "#{params[:controller]}.mobile" %>
+
+<% if current_user.roles == "Admin" || current_user.roles == "Artist" %>
+	<div id="content_new_poi">
+		<center><%= form_for(@poi) do |f| %>
+			<h1>Adding new POI</h1>
+			<br/>
+			<table class="new_poi_table" border="1">
+				<tr>
+					<td><%= f.label :title %></td>
+					<td><%= f.text_field :title %></td>
+				</tr>
+				<tr>
+					<td><%= f.label :address %></td>
+					<td><%= f.text_field :address %></td>
+				</tr>
+				<tr>
+					<td><%= f.label :sponsor %></td>
+					<td><%= f.text_field :sponsor %></td>
+				</tr>
+				<tr>
+					<td><%= f.label :description %></td>
+					<td><%= f.text_field :description %></td>
+				</tr>
+				<tr>
+					<td><%= f.label :latitude %></td>
+					<td><%= f.text_field :latitude %></td>
+				</tr>
+				<tr>
+					<td><%= f.label :longitude %></td>
+					<td><%= f.text_field :longitude %></td>
+				</tr>
+				<tr>
+					<td><%= f.label :image %></td>
+					<td><%= f.file_field :file %></td>
+				</tr>
+				<tr>
+					<td><%= f.hidden_field :user_id, :value => current_user.id %></td>
+					<td align="center"><%= f.submit %></td>
+				</tr>
+			</table>
+			<br />
+			<% if @poi.errors.any? %>
+				<center>
+					<div id="error_explanation">
+				  		<center><h2><%= pluralize(@poi.errors.count, "error") %> prohibited this post from being saved:</h2></center>
+					    <ul>
+					    	<% @poi.errors.full_messages.each do |msg| %>
+					      		<li><%= msg %></li>
+					    	<% end %>
+					    </ul>
+				  	</div>
+			  	</center>
+			<% end %>
+		<% end %></center>
+	</div>
+<% else %>
+
+<div id="content_new_poi">
+	<div id="new_poi">
+		<center>
+			<h1>Sorry but you can not add a new poi without becoming an artist</h1>
+		</center>
+	</div>
+</div>
+
+<% end %>

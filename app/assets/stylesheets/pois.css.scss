@@ -1,0 +1,339 @@
+//////////                              //////////
+//////////                              //////////
+//////////        Show All Page         //////////
+//////////                              //////////
+//////////                              //////////
+
+
+#coverlogin{
+  width: 100%; 
+  height: 0.1em;
+  visibility: hidden;
+}
+
+#loginbox{
+  height: 125px;
+}
+
+body {
+  background-color: #527578;
+}
+
+#content_show_all {
+  border: 2px solid black;
+  padding: 10px;
+  overflow: auto;
+  background-color: #47423F;
+  width:95%;
+  margin-top: 20px;
+  margin-right: auto;
+  margin-bottom: 20px;
+  margin-left: auto;
+}
+
+#all_list {
+  border: 2px solid black;
+  width: 80%;
+  background-color: #84978F;
+  padding: 10px;
+  margin: 20px auto;
+  box-shadow: 10px 10px 5px #ADA692;
+}
+
+#all_list img {
+  width: 100px;
+  height: auto;
+}
+
+#all_list table td, th {
+  padding: 5px;
+}
+
+//////////                              //////////
+//////////                              //////////
+//////////        Show POI Page         //////////
+//////////                              //////////
+//////////                              //////////
+
+#content_show {
+  border: 2px solid black;
+  padding: 10px;
+  overflow: auto;
+  background-color: #47423F;
+  width:95%;
+  margin: 20px auto;
+}
+
+#content_left {
+  border: 2px solid black;
+  background-color: #84978F;
+  float:left;
+  width:55%;
+  box-shadow: 10px 10px 5px #ADA692;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 20px;
+}
+
+#about_show {
+  background-color: #ADA692;
+  padding: 10px;
+  border-top: 2px solid black;
+  border: 2px solid black;
+  margin: 20px;
+}
+
+#about_show img {
+  width: 200px;
+  height: auto;
+  overflow: auto;
+  float: right;
+}
+
+#poi_content {
+  width:80%;
+  margin: 20px;
+}
+
+#scroll_images {
+  background-color: #ADA692;
+  padding: 10px;
+  border-top: 2px solid black;
+  border: 2px solid black;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+
+#scroll_images_user_uploaded {
+  background-color: #ADA692;
+  padding: 10px;
+  border-top: 2px solid black;
+  border: 2px solid black;
+  margin-top: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
+.cycle-slideshow { 
+  margin: 0 auto;
+  height: 300px;
+}
+
+.cycle-slideshow img { 
+  width: 40%;
+  height: auto;
+}
+
+#content_right {
+  border: 2px solid black;
+  background-color: #84978F;
+  float:right;
+  width:35%;
+  box-shadow: 10px 10px 5px #ADA692;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-right: 20px;
+}
+
+#content_right_top {
+  overflow: scroll;
+  border: 2px solid black;
+  padding: 10px;
+  height: 300px;
+  margin: 10px;
+  background-color: #ADA692;
+}
+
+#content_right_top img {
+  width: 40%;
+  height: auto;  
+}
+
+#content_right_bottom {
+  border: 2px solid black;
+  margin: 10px;
+  height: 300px;
+  background-color: #ADA692;
+}
+
+#rating_content {
+  border: 2px solid black;
+  margin: 10px;
+  background-color: #ADA692;
+}
+
+.rating {
+  unicode-bidi: bidi-override;
+  direction: rtl;
+  font-size: 200%;
+}
+
+.rating > a {
+  display: inline-block;
+  position: relative;
+  width: 1.1em;
+}
+
+.rating > a:hover:before,
+.rating > a:hover ~ a:before {
+   content: "\2605";
+   position: absolute;
+   color: yellow;
+}
+
+textarea {
+  resize: none;
+}
+
+#tabs ul {
+  list-style-type: none;
+  margin: 0;
+  padding-left: 20px;
+}
+
+#tabs li {
+  display: inline;
+  background-color: #47423F;
+  border: 2px solid black;
+  font-size: 150%;
+  padding: 10px;
+}
+
+#tabs_map {
+  background-color: #ADA692;
+  padding: 10px;
+  border-top: 2px solid black;
+  border: 2px solid black;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+
+//////////                                    //////////
+//////////                                    //////////
+//////////        Show Users POI Page         //////////
+//////////                                    //////////
+//////////                                    //////////
+
+#content_user_pois {
+  border: 2px solid black;
+  padding: 10px;
+  overflow: auto;
+  background-color: #47423F;
+  width:95%;
+  margin: 20px auto;
+}
+
+#user_pois {
+  border: 2px solid black;
+  width: 80%;
+  background-color: #84978F;
+  padding: 10px;
+  margin: 20px auto;
+  box-shadow: 10px 10px 5px #ADA692;
+}
+
+#user_pois img {
+  width: 150px;
+  height: auto;
+}
+
+#user_pois table td, th {
+  padding: 5px;
+}
+
+#user_map {
+  border: 2px solid black;
+  width: 70%; 
+  height: 400px;
+  margin: 10px;
+}
+
+//////////                                  //////////
+//////////                                  //////////
+//////////        New/Edit POI Page         //////////
+//////////                                  //////////
+//////////                                  //////////
+
+
+#content_new_poi {
+  border: 2px solid black;
+  padding: 10px;
+  overflow: auto;
+  background-color: #47423F;
+  width:95%;
+  margin: 20px auto;
+}
+
+#new_poi {
+  border: 2px solid black;
+  width: 50%;
+  background-color: #84978F;
+  padding: 10px;
+  margin: 20px auto;
+  box-shadow: 10px 10px 5px #ADA692;
+  overflow: auto;
+}
+
+.new_poi_table {
+  width: 70%;
+}
+
+//////////                                //////////
+//////////                                //////////
+//////////        Add Images Page         //////////
+//////////                                //////////
+//////////                                //////////
+
+#images_content {
+  border: 2px solid black;
+  padding: 10px;
+  overflow: auto;
+  background-color: #47423F;
+  width: 95%;
+  margin: 20px auto;
+  overflow: auto;
+}
+
+#current_images {
+  border: 2px solid black;
+  width: 40%;
+  background-color: #84978F;
+  padding: 10px;
+  margin: 20px;
+  float: left;
+  box-shadow: 10px 10px 5px #ADA692;
+}
+
+#current_images table {
+  padding: 5px;
+  width: 80%; 
+  margin-bottom: 10px;
+}
+
+#current_images table td {
+  padding: 5px;
+}
+
+#current_images img {
+  width: 100px;
+  height: auto;
+}
+
+#new_images {
+  border: 2px solid black;
+  width: 40%;
+  background-color: #84978F;
+  padding: 10px;
+  margin: 20px;
+  float: right;
+  box-shadow: 10px 10px 5px #ADA692;
+}
+
+#new_images table {
+  width: 90%;  
+}

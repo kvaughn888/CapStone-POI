@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id: 1
+  subject: MyText
+  body: MyText
+  sender: MyString
+  recipient: MyString
+  has_read: false
+
+two:
+  id: 2
+  subject: MyText
+  body: MyText
+  sender: MyString
+  recipient: MyString
+  has_read: false

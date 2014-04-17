@@ -1,0 +1,76 @@
+<%= stylesheet_link_tag params[:controller] %>
+
+<div id="inbox_content">
+	<div id="inbox_folders">
+		<center>
+			<h2>Folders</h2>
+		</center>
+		<hr />
+		<center>
+			<table>
+				<tr>
+					<th><h3><%= link_to "Compose", new_message_path, 'data-no-turbolink' => true %></h3></th>
+				</tr>
+				<tr>
+					<th><h3><%= link_to "Inbox", inbox_path, 'data-no-turbolink' => true %></h3></th>
+				</tr>
+				<tr>
+					<th><h3><%= link_to "Sent", sent_path, 'data-no-turbolink' => true %></h3></th>
+				</tr>
+			</table>
+		</center>
+	</div>
+	<div id="new_message_content">
+		<center>
+			<h2>New Message</h2>
+		</center>
+		<hr />
+		<center>
+			<%= form_for(:message, :url => {:controller => 'messages', :action => 'create'}) do |f| %>
+			<center>
+				<table>
+					<tr>
+						<td><h2><label>From:</label></h2></td>
+						<td><%= current_user.name %><%= f.hidden_field :sender, :value => current_user.id %></td>
+					</tr>
+					<tr>
+						<td><h2><label>To:</label></h2></td>
+						<td><%= select("message", "recipient", User.all.collect {|p| [ p.name, p.id ] }, { include_blank: true }) %></td>
+					</tr>
+					<tr>
+						<td><h2><label>Subject:</label></h2></td>
+						<td><%= f.text_area :subject, :rows => 1, :cols => 55 %></td>
+					</tr>
+					<tr>
+						<td><h2><label>Body:</label></h2></td>
+						<td><%= f.text_area :body, :rows => 12, :cols => 55 %></td>
+					</tr>
+					<tr>
+						<td><%= f.hidden_field :has_read, :value => "false" %></td>
+						<td align="center"><%= f.submit 'Send Message' %></td>
+					</tr>
+				</table>
+			</center>
+
+			</br>
+			<% if @message.errors.any? %>
+			<center>
+				<div id="error_explanation">
+					<center>
+						<h2><%= pluralize(@message.errors.count, "error") %> prohibited this message from being sent:</h2>
+					</center>
+					<ul>
+						<% @message.errors.full_messages.each do |msg| %>
+						<li>
+							<%= msg %>
+						</li>
+						<% end %>
+					</ul>
+				</div>
+			</center>
+			<% end %>
+
+			<% end %>
+		</center>
+	</div>
+</div>

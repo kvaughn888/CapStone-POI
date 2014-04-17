@@ -1,0 +1,48 @@
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script src="http://malsup.github.com/jquery.cycle2.js"></script>
+
+<%= stylesheet_link_tag params[:controller] %>
+	
+<div id="content">
+	<div id="all_images_content">
+		<center>
+			<h2>All Current POI Title Images</h2>
+		</center>
+		
+		<div class="refTable">
+			<center><div class="refRow">
+				<table>
+					<% @poi.each do |poi| %>
+		    			<% Dir.entries("public/images/#{poi.id}_images/title_image")[2..-1].each do |file_name| %>
+		    				<% if file_name.byteslice(0,5).to_s.match(/_poi_/) %>
+			    				<% if Poi.poi_counter == 1 %>
+									<% Poi.poi_counter = 0 %>
+			    						<td align="center">
+			    							<div class="refCell">
+											<%= image_tag("#{@root_url}/images/#{poi.id}_images/title_image/" + file_name, :class=>"fadePic scale") %>
+											<%= link_to "View #{poi.title}", "/pois/#{poi.id}", :class=>"info", 'data-no-turbolink' => true %></div>
+											<div class="refSep"></div>
+										</td>
+									</tr>
+								<% elsif Poi.poi_counter == 0 %>
+									<% Poi.poi_counter = 1 %>
+									<tr>
+				    					<td align="center">
+			    							<div class="refCell">
+											<%= image_tag("#{@root_url}/images/#{poi.id}_images/title_image/" + file_name, :class=>"fadePic scale") %>
+											<%= link_to "View #{poi.title}", "/pois/#{poi.id}", :class=>"info", 'data-no-turbolink' => true %></div>
+											<div class="refSep"></div>
+										</td>
+			    				<% end %>
+		    				<% end %>
+		    			<% end %>
+		    		<% end %>
+		    		<% if Poi.poi_counter == 1 %>
+		    			<% Poi.poi_counter = 0 %>
+		    			</tr>
+		    		<% end %>
+	    		</table>
+			</div></center>
+		</div>
+	</div>
+</div>

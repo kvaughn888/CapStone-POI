@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <%= favicon_link_tag("http://localhost:3000/favicon.jpg?1") %>
+  <title>Wolf Point</title>
+  <%= stylesheet_link_tag "mobile", "data-turbolinks-track" => true%>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<div id="top_bar" >
+  <% if current_user %>
+    Signed in as <strong><%= current_user.name %></strong>
+    <% if current_user.roles == "Admin" %>
+    <%= link_to "See your profile", "/users/#{current_user.id}", 'data-no-turbolink' => true %> | <%= link_to "See all artist and users", "/users/", 'data-no-turbolink' => true %>
+    <% else if current_user.roles == "Artist" %>
+    <%= link_to "See your profile", "/users/#{current_user.id}", 'data-no-turbolink' => true %>
+    <% end %>
+    <% end %>
+     | <%= link_to "Sign Out", "/sessions/logout", 'data-no-turbolink' => true %>
+  <% else %>
+    <%= link_to "Sign In", sign_in_path, 'data-no-turbolink' => true %>
+    or
+    <%= link_to " Join In", join_in_path, 'data-no-turbolink' => true %>
+  <% end %>
+</div>
+
+<% flash.each do |name, msg| %>
+	<%= content_tag :div, msg, :id => "flash_#{name}" %>
+<% end %>
+
+<div id="header">
+	<div id="title_header">
+		<img src="<%=@root_url%>/banner6.png">
+	</div>
+</div>
+
+<% if current_user == nil%>
+	<center>
+		<div id="nav">
+				<li><h3><%= link_to "Home", home_path, 'data-no-turbolink' => true %></h3></li>
+				<li><h3><%= link_to "All Images of Wolves", all_images_path, 'data-no-turbolink' => true %></h3></li>
+				<li><h3><%= link_to "All Artist", all_managers_path, 'data-no-turbolink' => true %></h3></li>
+				<li><h3><%= link_to "Show All Wolves", show_all_path, 'data-no-turbolink' => true %></h3></li>
+		</div>
+	</center>
+<% else if current_user.roles == "Artist" || current_user.roles == "Admin" %>
+	<center>
+		<div id="nav_roles">
+				<li><h3><%= link_to "Home", home_path, 'data-no-turbolink' => true %></h3></li>
+				<li><h3><%= link_to "All Images of Wolves", all_images_path, 'data-no-turbolink' => true %></h3></li>
+				<li><h3><%= link_to "All Artist", all_managers_path, 'data-no-turbolink' => true %></h3></li>
+				<li><h3><%= link_to "Show All Wolves", show_all_path, 'data-no-turbolink' => true %></h3></li>
+				<li><h3><%= link_to "My Wolves", "/pois/show_users_pois", 'data-no-turbolink' => true %></h3></li>
+				<li><h3><%= link_to 'New Wolf', new_poi_path, 'data-no-turbolink' => true %></h3></li>
+		</div>
+	</center>
+<% else %>
+	<center>
+		<div id="nav">
+				<li><h3><%= link_to "Home", home_path, 'data-no-turbolink' => true %></h3></li>
+				<li><h3><%= link_to "All Images of Wolves", all_images_path, 'data-no-turbolink' => true %></h3></li>
+				<li><h3><%= link_to "Show All Wolves", show_all_path, 'data-no-turbolink' => true %></h3></li>
+		</div>
+	</center>
+<% end %>
+<% end %>
+
+<%= yield %>
+<%= yield :scripts %>
+
+<div id="footer">
+	
+</div>
+
+</body>
+</html>

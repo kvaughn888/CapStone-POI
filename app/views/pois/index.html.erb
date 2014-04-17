@@ -1,0 +1,76 @@
+<%= stylesheet_link_tag params[:controller] %>
+	
+<div id="content_show_all">	
+	<div id="all_list">
+		<center>
+			<h2>Here are all the Wolves!</h2>
+		</center>
+		<hr>
+		<center>
+			<table border="2">
+				<thead>
+					<tr>
+						<th>Image</th>
+						<th>Title</th>
+						<th>Artist Name</th>
+						<th>Address</th>
+						<th>Description</th>
+						<th>Show</th>
+						<% if current_user != nil %>
+							<% if current_user.roles == "Admin" %>
+								<th>User</th>
+								<th>Unapproved</th>
+								<th>Approved</th>
+							<% end %>
+						<% end %>
+						<th>Go Here</th>
+					</tr>
+			    </thead>
+	
+				<tbody>
+				<% @poi.each do |poi| %>
+					<tr>
+						<% Poi.poi_home_image = false %>
+						<% Dir.entries("public/images/#{poi.id}_images/title_image")[2..-1].each do |file_name| %>
+							<% if file_name.byteslice(0,5).to_s.match(/_poi_/) %>
+								<td><%= image_tag("#{@root_url}/images/#{poi.id}_images/title_image/" + file_name) %></td>
+								<% Poi.poi_home_image = true %>
+							<% end %>
+						<% end %>
+						
+						<% if Poi.poi_home_image == false %>
+							<td><img src="<%= @root_url %>/profile_images/no_profile_image.jpg" /></td>
+						<% end %>
+						
+						<td><%= poi.title %></td>
+						
+						<% @users.each do |user| %>
+							<% if user.id.to_s == poi.user_id.to_s %>
+								<td><%= user.name %></td>
+							<% end %>
+						<% end %>
+						
+						<td><%= poi.address %></td>
+						<td><%= truncate(poi.description, :length => 50) %></td>
+						<td><%= link_to "View", "/pois/#{poi.id}", 'data-no-turbolink' => true %></td>
+						
+						<% if current_user != nil %>
+							<% if current_user.roles == "Admin" %>
+								<td><%= link_to "Comments",  show_comments_path(poi), 'data-no-turbolink' => true %></td>
+								<td><%= link_to "Images",  show_unapproved_images_path(poi), 'data-no-turbolink' => true %></td>
+								<td><%= link_to "Images",  show_approved_images_path(poi), 'data-no-turbolink' => true %></td>
+							<% end %>
+						<% end %>
+						<td><%= link_to "Directions", "https://www.google.com/maps/dir/current%20%20location/#{poi.latitude},+#{poi.longitude}/@#{poi.latitude},#{poi.longitude},13z", :target => "_blank" %></td>
+						<% if current_user != nil %>
+							<% if current_user.roles == "Admin" %>
+								<td><%= link_to 'Destroy', poi, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+							<% end %>
+						<% end %>
+					</tr>
+				<% end %>
+				</tbody>
+			</table>
+		</center>
+	</div>
+</div>

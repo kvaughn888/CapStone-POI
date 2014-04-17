@@ -1,0 +1,59 @@
+<%= stylesheet_link_tag params[:controller] %>
+
+<div id="inbox_content">
+	<div id="inbox_folders">
+		<center><h2>Folders</h2></center>
+		<hr />
+		<center>
+			<table>
+				<tr>
+					<th><h3><%= link_to "Compose", new_message_path, 'data-no-turbolink' => true %></h3></th>
+				</tr>
+				<tr>
+					<th><h3><%= link_to "Inbox", inbox_path, 'data-no-turbolink' => true %></h3></th>
+				</tr>
+				<tr>
+					<th><h3><%= link_to "Sent", sent_path, 'data-no-turbolink' => true %></h3></th>
+				</tr>
+			</table>
+		</center>
+	</div>
+	<div id="inbox_messages">
+		<center><h2><%= current_user.name %>'s Sent Messages</h2></center>
+		<hr />
+		<center>
+			<% if @messages == nil %>
+				<h3>You do not have anything in your inbox.</h3>
+			<% else %>
+			<table border="1">
+				<thead>
+					<tr>
+						<th></th>
+						<th>To</th>
+						<th>Subject</th>
+						<th></th>
+						<th></th>
+					</tr>
+			    </thead>
+			    <tbody>
+					<% @messages.each do |message| %>
+						<% if message.sender.to_s == current_user.id.to_s %>
+							<tr>
+								<td></td>
+								<% @users.each do |user| %>
+									<% if user.id.to_s == message.recipient.to_s%>
+										<td><%= user.name %></td>
+									<% end %>
+								<% end %>
+								<td><%= message.subject %></td>
+								<td><%= link_to "View", show_message_path(message.id), 'data-no-turbolink' => true %></td>
+								<td><%= link_to 'Destroy', delete_message_path(message.id), method: :delete, data: {confirm: 'Are you sure?' }, 'data-no-turbolink' => true %></td>
+							</tr>
+						<% end %>
+					<% end %>
+				</tbody>
+			</table>
+			<% end %>
+		</center>
+	</div>
+</div>

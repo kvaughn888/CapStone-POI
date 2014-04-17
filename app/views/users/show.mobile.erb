@@ -1,0 +1,116 @@
+<%= stylesheet_link_tag "#{params[:controller]}.mobile" %>
+	
+<% if current_user.roles == "Admin" || current_user.roles == "Artist" %>
+	<% if current_user.id == @user.id || current_user.roles == "Admin" %>
+	
+	<div id="content_show_user">
+		<div id="user_information">
+			<center>
+				<h2>Here is your contact information</h2>
+			</center>
+			<hr>
+			<table class="information_table" border="2">
+				<tr>
+					<td><h4>Name</h4></td>
+					<td><h4><%= @user.name %></h4></td>
+				</tr>
+				<tr>
+					<td><h4>Email</h4></td>
+					<td><h4><%= @user.email %></h4></td>
+				</tr>
+				<tr>
+					<td><h4>Address</h4></td>
+					<td><h4><%= @user.address1 %> <%= @user.address2 %></h4></td>
+				</tr>
+				<tr>
+					<td><h4>City</h4></td>
+					<td><h4><%= @user.city %></h4></td>
+				</tr>
+				<tr>
+					<td><h4>State</h4></td>
+					<td><h4><%= @user.city %></h4></td>
+				</tr>
+				<tr>
+					<td><h4>Zip</h4></td>
+					<td><h4><%= @user.zip %></h4></td>
+				</tr>
+				<tr>
+					<td><h4>Phone</h4></td>
+					<td><h4>(<%= @user.phone1 %>) - <%= @user.phone2 %> - <%= @user.phone3 %></h4></td>
+				</tr>
+				<tr>
+					<td><h4>Personal Website</h4></td>
+					<td><h4><%= @user.zip %></h4></td>
+				</tr>
+				<tr>
+					<td><h4>Age</h4></td>
+					<td><h4><%= @user.age %></h4></td>
+				</tr>
+				<tr>
+					<td><h4>Sex</h4></td>
+					<td><h4><%= @user.sex %></h4></td>
+				</tr>
+				<tr>
+					<td><h4>Summary about you</h4></td>
+					<td><h4><%= @user.bio %></h4></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td><%= link_to 'Edit', edit_user_path(@user) %></td>
+				</tr>
+			</table>
+		</div>
+		
+		<div id="user_profile_image">
+			<center>
+				<h2>Your Profile Image</h2>
+			</center>
+			<hr>
+			<% User.has_image == false %>
+			<% Dir.entries("public/profile_images")[2..-1].each do |file_name| %>
+				<% if file_name.byteslice(0,2).to_s == @user.id.to_s %>
+					<center>
+						<%= image_tag("#{@root_url}/profile_images/" + file_name) %>
+						<% User.has_image = true %>
+					</center>
+				<% end %>
+			<% end %>
+			<% if User.has_image == false %>
+				<center>
+					<img src="#{@root_url}/images/profile_images/no_profile_image.jpg" />
+				</center>
+			<% end %>
+			<br />
+			<br />
+			
+			<center>
+				<%= form_for(@user) do |f| %>
+					<table border="2">
+						<tr>
+							<td><label>Upload new profile image</label></td>
+							<td><%= f.file_field :file %></td>
+						</tr>
+						<tr>
+							<td><%= f.hidden_field :user_id, :value => current_user.id %></td>
+							<td align="center"><%= f.submit "Upload Image" %></td>
+						</tr>
+					</table>
+				<% end %>
+			</center>
+		</div>
+	</div>
+	<% else %>
+		<div id="content_show_user">
+			<center>
+				<h1>Sorry but this is not your user page</h1>
+			</center>
+		</div>
+	<% end %>
+<% else %>
+
+<div id="content_show_user">
+	<center>
+		<h1>Sorry but you can not add a new poi without becoming an artist</h1>
+	</center>
+</div>
+<% end %>

@@ -1,0 +1,100 @@
+//////////                                //////////
+//////////                                //////////
+//////////        Index/Inbox Page        //////////
+//////////                                //////////
+//////////                                //////////
+
+#inbox_content {
+  border: 2px solid black;
+  padding: 10px;
+  overflow: auto;
+  background-color: #47423F;
+  width:95%;
+  margin: 20px auto;
+}
+
+#inbox_messages {
+  float: right;
+  border: 2px solid black;
+  width: 50%;
+  background-color: #84978F;
+  padding: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-right: 80px;
+  box-shadow: 10px 10px 5px #ADA692;
+}
+
+#inbox_messages table {
+  padding: 5px;
+}
+
+#inbox_messages th, td {
+  padding: 5px;
+}
+
+#inbox_folders {
+  float: left;
+  border: 2px solid black;
+  width: 20%;
+  background-color: #84978F;
+  padding: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 80px;
+  box-shadow: 10px 10px 5px #ADA692;
+}
+
+//////////                        //////////
+//////////                        //////////
+//////////        New Page        //////////
+//////////                        //////////
+//////////                        //////////
+
+#new_message_content {
+  float: right;
+  border: 2px solid black;
+  width: 50%;
+  background-color: #84978F;
+  padding: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-right: 80px;
+  box-shadow: 10px 10px 5px #ADA692;
+}
+
+#new_message_content table {
+  width: 100%;
+}
+
+textarea {
+  resize: none;
+}
+
+//////////                         //////////
+//////////                         //////////
+//////////        Show Page        //////////
+//////////                         //////////
+//////////                         //////////
+
+#show_message_content {
+  float: right;
+  border: 2px solid black;
+  width: 50%;
+  background-color: #84978F;
+  padding: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-right: 80px;
+  box-shadow: 10px 10px 5px #ADA692;
+}
+
+#show_message_content table {
+  width: 100%;
+}
+
+#show_message_content th, td {
+  padding: 5px;
+}
+
+

@@ -1,0 +1,12 @@
+<p>
+<%= comment.user_id %>
+</p>
+<p>
+<%= comment.poi_id %>
+</p>
+<p>
+<%= comment.text %>
+</p>
+<p>
+<%= link_to 'Destroy Comment', [@poi, comment], method: :delete, data: { confirm: 'Are you sure?' } %>
+</p>

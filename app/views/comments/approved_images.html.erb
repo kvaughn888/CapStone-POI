@@ -1,0 +1,26 @@
+<%= stylesheet_link_tag params[:controller] %>
+
+<div id="content">
+	<center>
+		<div id="each_comment_table">
+			<h2>All Approved User Images For Wolf: <%= @poi.title %></h2>
+			<table border="1">
+				<thead>
+					<tr>
+						<th>Image</th>
+						<th></th>
+					</tr>
+				</thead>
+				
+				<tbody>
+					<% Dir.entries("public/images/#{@poi.id}_images/user_images/approved")[2..-1].each do |file_name| %>
+					<tr>
+						<td><%= image_tag("#{@root_url}/images/#{@poi.id}_images/user_images/approved/" + file_name) %></td>
+						<td><%= link_to 'Delete Image', delete_approved_image_path(@poi, file_name), data: {confirm: 'Are you sure you want to deleted this approved image?' }, 'data-no-turbolink' => true %></td>
+					</tr>
+					<% end %>
+				</tbody>
+			</table>
+		</div>
+	</center>
+</div>

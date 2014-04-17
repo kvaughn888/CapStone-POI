@@ -1,0 +1,43 @@
+<%= stylesheet_link_tag params[:controller] %>
+
+<div id="edit_role_content">
+	<div id="edit_content">
+		<center><h2>Editing <%= @user.name %>'s Role</h2></center>
+		<%= form_for(@user, :url => {:controller => 'users', :action => 'update_role'}) do |f| %>
+			<center>
+				<table border="2">
+					<thead>
+						<tr>
+							<th>Current Role</th>
+							<th>New Role</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td align="center"><h3><%= @user.roles %></h3></td>
+							<td align="center">
+								<% if @user.roles == "Admin" %>
+									<li style="list-style-type: none;"><%= radio_button_tag(:wanted_role, "Admin", :checked) %>Admin</li>
+									<li style="list-style-type: none;"><%= radio_button_tag(:wanted_role, "Artist") %>Artist</li>
+									<li style="list-style-type: none;"><%= radio_button_tag(:wanted_role, "User") %>User</li>
+								<% elsif @user.roles == "Artist" %>
+									<li style="list-style-type: none;"><%= radio_button_tag(:wanted_role, "Admin") %>Admin</li>
+									<li style="list-style-type: none;"><%= radio_button_tag(:wanted_role, "Artist", :checked) %>Artist</li>
+									<li style="list-style-type: none;"><%= radio_button_tag(:wanted_role, "User") %>User</li>
+								<% elsif @user.roles == "User" %>
+									<li style="list-style-type: none;"><%= radio_button_tag(:wanted_role, "Admin") %>Admin</li>
+									<li style="list-style-type: none;"><%= radio_button_tag(:wanted_role, "Artist") %>Artist</li>
+									<li style="list-style-type: none;"><%= radio_button_tag(:wanted_role, "User", :checked) %>User</li>
+								<% end %>
+							</td>
+							<tr>
+								<td></td>
+								<td align="center"><%= f.submit 'Update Role' %></td>
+							</tr>
+						</tr>
+					</tbody>
+				</table>
+			</center>
+		<% end %>
+	</div>
+</div>

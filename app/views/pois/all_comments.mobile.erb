@@ -1,0 +1,44 @@
+<%= stylesheet_link_tag "#{params[:controller]}.mobile" %>
+
+<div id="wrapper">
+	<div id="header">
+		<center><h1>All Comments</h1></center>
+	</div>
+	<center><div id="nav">
+		<ul>
+			<li class="float_left"><%= link_to "Home", home_path %></li>
+			<li class="float_center"><%= link_to "Summary", summary_path %></li>
+			<li class="float_right"><%= link_to "Show_All", show_all_path %></li>
+		</ul>
+	</div></center>
+	<div id="content">	
+		<center>
+			<h2>List of all the comments on all pois</h2>
+		</center>
+		<hr>
+		<center>
+			<table border="2">
+				<thead>
+					<tr>
+						<th>User Id</th>
+						<th>POI Id</th>
+						<th>Comment Text</th>
+						<th></th>
+					</tr>
+			    </thead>
+
+				<tbody>
+				<% @comment.each do |comment| %>
+					<tr>
+						<td><%= comment.user_id %></td>
+						<td><%= comment.poi_id %></td>
+						<td><%= comment.text %></td>
+						
+						<td><%= link_to 'Destroy Comment', [comment.post, comment], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+					</tr>
+				<% end %>
+				</tbody>
+			</table>
+		</center>
+	</div>
+</div>

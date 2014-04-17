@@ -1,0 +1,60 @@
+<%= stylesheet_link_tag params[:controller] %>
+
+<div id="content">
+	<div id="all_managers">
+		<center>
+			<h2>Here is the list of all the Artist!</h2>
+		</center>
+		<hr>
+		<center>
+			<table border="2">
+				<thead>
+					<tr>
+						<th>Image</th>
+						<th>Artist Name</th>
+						<th>Artist Bio</th>
+						<th>Role</th>
+						<th>Wolves</th>
+					</tr>
+			    </thead>
+	
+				<tbody>
+					<% @users.each do |user| %>
+						<% if user.roles == "Artist" || user.roles == "Admin" %>
+							<tr>
+								<% User.has_image = false %>
+								<% Dir.entries("public/profile_images")[2..-1].each do |file_name| %>
+									<% if file_name.byteslice(0,2).to_s == user.id.to_s %>
+										<center>
+											<td align="center"><%= image_tag("#{@root_url}/profile_images/" + file_name) %></td>
+											<% User.has_image = true %>
+										</center>
+									<% end %>
+								<% end %>
+								<% if User.has_image == false %>
+									<center>
+										<td align="center"><img src="<%= @root_url %>/profile_images/no_profile_image.jpg" /></td>
+									</center>
+								<% end %>
+								<td align="center"><%= user.name %></td>
+								<% if user.bio == nil || user.bio == "" %>
+									<td align="center">This person has not put their bio yet</td>
+								<% else %>
+									<td><%= user.bio %></td>
+								<% end %>
+								<td align="center"><%= user.roles %></td>
+								<td>
+									<% @poi.each do |poi| %>
+										<% if poi.user_id.to_s == user.id.to_s %>
+												<li style="list-style-type: none;"><%= link_to "#{poi.title}", "/pois/#{poi.id}", 'data-no-turbolink' => true %></li>
+										<% end %>
+									<% end %>
+								</td>
+							</tr>
+						<% end %>
+					<% end %>
+				</tbody>
+			</table>
+		</center>
+	</div>
+</div>

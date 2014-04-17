@@ -1,0 +1,36 @@
+<%= stylesheet_link_tag params[:controller] %>
+
+<div id="content">
+	<center>
+		<div id="each_comment_table">
+			<h2>All Comments About Wolf: <%= @poi.title %></h2>
+			<table border="1">
+				<thead>
+					<tr>
+						<th>User Name</th>
+						<th>Comment</th>
+						<% if current_user.roles == "Admin" %>
+							<th></th>
+						<% end %>
+					</tr>
+				</thead>
+				
+				<tbody>
+					<% @poi.comments.each do |comment| %>
+						<% @users.each do |user| %>
+							<% if user.id.to_s == comment.user_id.to_s %>
+								<tr>
+									<td><%= user.name %></td>
+									<td><%= comment.text %></td>
+									<% if current_user.roles == "Admin" %>
+										<td><%= link_to 'Destroy', delete_comment_path(comment, @poi.id), method: :delete, data: {confirm: 'Are you sure?' }, 'data-no-turbolink' => true %></td>
+									<% end %>
+								</tr>
+							<% end %>
+						<% end %>
+					<% end %>
+				</tbody>
+			</table>
+		</div>
+	</center>
+</div>

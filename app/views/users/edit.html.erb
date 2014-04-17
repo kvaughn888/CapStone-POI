@@ -1,0 +1,107 @@
+<%= stylesheet_link_tag params[:controller] %>
+	
+<center><div id="join_in_body">
+	<%= form_for(@user) do |f| %>
+		<center>
+			<div id="join_table">
+			<center>
+				<table>
+				<tr>
+					<td><h3><label>Name:</label></h3></td>
+					<td><%= f.text_field :name%></td>
+				</tr>
+				<tr>
+					<td><h3><label>Email:</label></h3></td>
+					<td><%= f.text_field :email%></td>
+				</tr>
+				<% if current_user.roles != "Admin" %>
+				<tr>
+					<td><h3><label>Role Wanted:</label></h3></td>
+					<td>
+						<% if @user.roles == "Artist" %>
+							<input type="radio" id="roles" name="user[roles]" value="Artist" checked="checked">Artist</input>
+							<input type="radio" id="roles" name="user[roles]" value="User">User</input>
+						<% else %>
+							<input type="radio" id="roles" name="user[roles]" value="Artist">Artist</input>
+							<input type="radio" id="roles" name="user[roles]" value="User" checked="checked">User</input>
+						<% end %>
+					</td>
+				</tr>
+				<% end %>
+				
+				<% if current_user.roles == "Artist" || current_user.roles == "Admin" %>
+					<tr>
+						<td><hr></td>
+						<td><hr></td>
+					</tr>
+					<tr>
+						<td><h3><label>Address:</label></h3></td>
+						<td><%= f.text_field :address1 %></td>
+					</tr>
+					<tr>
+						<td><h3><label>Address:</label></h3></td>
+						<td><%= f.text_field :address2 %></td>
+					</tr>
+					<tr>
+						<td><h3><label>City:</label></h3></td>
+						<td><%= f.text_field :city %></td>
+					</tr>
+					<tr>
+						<td><h3><label>State:</label></h3></td>
+						<td><%= f.text_field :state %></td>
+					</tr>
+					<tr>
+						<td><h3><label>Zip:</label></h3></td>
+						<td><%= f.text_field :zip %></td>
+					</tr>
+					<tr>
+						<td><h3><label>Phone:</label></h3></td>
+						<td>(<%= f.text_field :phone1 %>) - <%= f.text_field :phone2 %> - <%= f.text_field :phone3 %></td>
+					</tr>
+					<tr>
+						<td><hr></td>
+						<td><hr></td>
+					</tr>
+					<tr>
+						<td><h3><label>Personal Website:</label></h3></td>
+						<td><%= f.text_field :website %></td>
+					</tr>
+					<tr>
+						<td><h3><label>Age:</label></h3></td>
+						<td><%= f.text_field :age %></td>
+					</tr>
+					<tr>
+						<td><h3><label>Sex</label></h3></td>
+						<td>
+							<input type="radio" id="sex" name="user[sex]" value="Male">Male</input>
+							<input type="radio" id="sex" name="user[sex]" value="Female">Female</input>
+						</td>
+					</tr>
+					<tr>
+						<td><h3><label>Short Summary about yourself:</label></h3></td>
+						<td><%= f.text_area :bio, :rows => 12, :cols => 55 %></td>
+					</tr>
+				<% end %>
+				<tr>
+					<td></td>
+					<td align="center"><%= f.submit %></td>
+				</tr>
+				</table>	
+			</center>
+			<br />
+			<% if @user.errors.any? %>
+				<center>
+					<div id="error_explanation">
+				  		<center><h2><%= pluralize(@user.errors.count, "error") %> prohibited this post from being saved:</h2></center>
+					    <ul>
+					    	<% @user.errors.full_messages.each do |msg| %>
+					      		<li><%= msg %></li>
+					    	<% end %>
+					    </ul>
+				  	</div>
+			  	</center>
+			<% end %>
+			</div>
+		</center>
+	<% end %>
+</div></center>
