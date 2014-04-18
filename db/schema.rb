@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140304232557) do
+ActiveRecord::Schema.define(version: 20140303225715) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "authorizations", force: true do |t|
     t.string   "provider"
@@ -29,18 +32,6 @@ ActiveRecord::Schema.define(version: 20140304232557) do
     t.datetime "updated_at"
   end
 
-  create_table "loginusers", force: true do |t|
-    t.string   "provider"
-    t.string   "uid"
-    t.string   "name"
-    t.string   "oauth_token"
-    t.datetime "oauth_expires_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "email"
-    t.string   "password"
-  end
-
   create_table "messages", force: true do |t|
     t.text     "subject"
     t.text     "body"
@@ -52,24 +43,24 @@ ActiveRecord::Schema.define(version: 20140304232557) do
   end
 
   create_table "pois", force: true do |t|
-    t.float   "latitude"
-    t.float   "longitude"
-    t.string  "address"
-    t.string  "description"
-    t.string  "title"
-    t.integer "user_id"
-    t.string  "sponsor"
-    t.integer "total_ratings"
-    t.integer "total_people"
-    t.integer "avg_rating"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.string   "address"
+    t.string   "description"
+    t.string   "title"
+    t.integer  "user_id"
+    t.string   "sponsor"
+    t.integer  "total_ratings"
+    t.integer  "total_people"
+    t.integer  "avg_rating"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", force: true do |t|
     t.string   "name"
     t.string   "email"
     t.string   "password"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.string   "roles"
     t.string   "provider"
     t.string   "uid"
@@ -90,6 +81,8 @@ ActiveRecord::Schema.define(version: 20140304232557) do
     t.datetime "password_expires_after"
     t.string   "salt"
     t.boolean  "is_approved"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end
